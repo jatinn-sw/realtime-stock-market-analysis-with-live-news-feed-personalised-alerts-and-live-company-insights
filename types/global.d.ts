@@ -98,7 +98,7 @@ declare global {
 
     type StockDetailsPageProps = {
         params: Promise<{
-            symbol: string;
+            symbols: string;
         }>;
     };
 
