@@ -65,7 +65,9 @@ The powerful admin dashboard lets you oversee stock data, publish financial news
 
 👉 **Analytics & Insights**: Explore detailed analytics on user behavior, stock trends, and engagement patterns to guide both product and trading strategies.
 
-Plus, a clean, modular codebase designed for scalability, reusability, and maintainable architecture.
+👉 **Email notifications & unsubscribe**: Welcome and daily news summary emails include one-click unsubscribe links. Unsubscribed users are stored in an `email_unsubscribes` collection and are excluded from future marketing and news emails. Token-based unsubscribe links are generated with HMAC verification for security.
+
+> **Note — Unsubscribe feature status:** The unsubscribe flow (API route, token verification, and exclusion from emails) is partially implemented. It is **not yet fully complete or fully functional**. Please use with this in mind.
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
@@ -119,6 +121,8 @@ GEMINI_API_KEY=
 #NODEMAILER
 NODEMAILER_EMAIL=
 NODEMAILER_PASSWORD=
+
+NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 ```
 
 Replace the placeholder values with your real credentials. You can get these by signing up at: [**MongoDB**](https://www.mongodb.com/products/platform/atlas-database), [**Gemini**](https://aistudio.google.com/prompts/new_chat?utm_source=chatgpt.com), [**Inngest**](https://jsm.dev/stocks-inggest), [**Finnhub**](https://finnhub.io).
