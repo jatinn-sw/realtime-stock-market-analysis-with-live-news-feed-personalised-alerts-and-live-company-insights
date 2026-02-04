@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { unsubscribeEmail } from '@/lib/actions/email-preferences.actions';
-import { verifyUnsubscribeToken } from '@/lib/utils/unsubscribe';
+import { getUnsubscribeBaseUrl, verifyUnsubscribeToken } from '@/lib/utils/unsubscribe';
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
@@ -63,7 +63,7 @@ function renderPage(success: boolean, message?: string): string {
   <div class="card">
     <h1>${title}</h1>
     ${body}
-    <p style="margin-top: 24px;"><a href="${process.env.NEXT_PUBLIC_APP_URL || process.env.BETTER_AUTH_URL || '/'}">Back to MarketSense</a></p>
+    <p style="margin-top: 24px;"><a href="${getUnsubscribeBaseUrl()}">Back to MarketSense</a></p>
   </div>
 </body>
 </html>`;
