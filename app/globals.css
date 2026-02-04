@@ -43,7 +43,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-:root {
+::root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -114,22 +114,22 @@
 
 /* === CUSTOM COLOR THEME === */
 @theme {
-  /* Extended Gray Scale */
-  --color-gray-900: #050505;
-  --color-gray-800: #141414;
-  --color-gray-700: #212328;
-  --color-gray-600: #30333A;
-  --color-gray-500: #9095A1;
-  --color-gray-400: #CCDADC;
+  /* Extended Gray Scale - deep purple night palette */
+  --color-gray-900: #050016; /* app background */
+  --color-gray-800: #0b0620; /* cards / header */
+  --color-gray-700: #140a2e; /* subtle surfaces */
+  --color-gray-600: #20143f; /* borders / muted blocks */
+  --color-gray-500: #a5a1c4; /* muted text */
+  --color-gray-400: #f4f1ff; /* light text on dark surfaces */
 
-  /* Vibrant Colors */
-  --color-blue-600: #5862FF;
-  --color-yellow-400: #FDD458;
-  --color-yellow-500: #E8BA40;
-  --color-teal-400: #0FEDBE;
-  --color-red-500: #FF495B;
-  --color-orange-500: #FF8243;
-  --color-purple-500: #D13BFF;
+  /* Vibrant Colors (shifted toward magenta/purple) */
+  --color-blue-600: #7b5cff;
+  --color-yellow-400: #facc6b;
+  --color-yellow-500: #eab308;
+  --color-teal-400: #22e3c8;
+  --color-red-500: #fb7185;
+  --color-orange-500: #fb923c;
+  --color-purple-500: #a855f7;
 }
 
 @layer base {
@@ -138,7 +138,12 @@
   }
 
   body {
-    @apply bg-gray-900 text-foreground;
+    /* Deep purple night gradient background instead of flat black/blue */
+    background:
+      radial-gradient(circle at top left, #4c1d95 0, transparent 55%),
+      radial-gradient(circle at bottom right, #1e1b4b 0, transparent 55%),
+      linear-gradient(to bottom, #050016, #020016);
+    color: oklch(0.984 0.003 247.858);
   }
 }
 
@@ -160,11 +165,15 @@
   }
 
   .header {
-    @apply z-50 w-full h-[70px] bg-gray-800;
+    @apply z-50 w-full h-[70px] border-b border-white/5;
+    background:
+      radial-gradient(circle at top, #6d28d9 0, transparent 55%),
+      linear-gradient(to right, #050016, #12042b);
+    backdrop-filter: blur(16px);
   }
 
   .header-wrapper {
-    @apply flex justify-between items-center px-6 py-4 text-gray-500;
+    @apply flex justify-between items-center px-6 py-4 text-gray-400;
   }
 
   .auth-layout {
@@ -469,30 +478,30 @@
 /* TradingView Advanced Chart Widget Styles */
 .tradingview-widget-container {
   position: relative;
-  background-color: #141414 !important;
+  background-color: #020617 !important;
   border-radius: 8px !important;
   overflow: hidden !important;
 }
 
 .tv-embed-widget-wrapper__body {
-  background-color: #141414 !important;
+  background-color: #020617 !important;
 }
 
 .tradingview-widget-container__widget {
-  background-color: #141414 !important;
+  background-color: #020617 !important;
   height: 100% !important;
 
 }
 
 .widget-stock-heatmap-container .screenerMapWrapper-BBVfGP0b {
   overflow: hidden !important;
-  background: #141414 !important;
-  background-color: #141414 !important;
+  background: #020617 !important;
+  background-color: #020617 !important;
 }
 
 .canvasContainer-tyaAU8aH {
-  background: #141414 !important;
-  background-color: #141414 !important;
+  background: #020617 !important;
+  background-color: #020617 !important;
 }
 
 .tv-site-widget--bg_none {
@@ -519,12 +528,12 @@
 }
 
 .tv-embed-widget-wrapper .tv-embed-widget-wrapper__body {
-  background: #141414 !important;
-  background-color: #141414 !important;
+  background: #020617 !important;
+  background-color: #020617 !important;
 }
 
 .tradingview-widget-container iframe {
-  background-color: #141414 !important;
+  background-color: #020617 !important;
   width: 100% !important;
 }
 
