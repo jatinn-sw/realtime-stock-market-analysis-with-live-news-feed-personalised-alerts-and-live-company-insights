@@ -22,4 +22,6 @@ const Header = async ({ user }: { user: User }) => {
         </header>
     )
 }
-export default Header
+
+export { Header };
+export default Header;
