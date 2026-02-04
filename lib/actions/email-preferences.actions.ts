@@ -7,14 +7,14 @@ export async function isUnsubscribed(email: string): Promise<boolean> {
     try {
         const mongoose = await connectToDatabase();
         const db = mongoose.connection.db;
-        if (!db) return false;
+        if (!db) return true;
         const doc = await db.collection('email_unsubscribes').findOne(
             { email: email.toLowerCase().trim() }
         );
         return !!doc;
     } catch (e) {
         console.error('isUnsubscribed error:', e);
-        return false;
+        return true;
     }
 }
 
