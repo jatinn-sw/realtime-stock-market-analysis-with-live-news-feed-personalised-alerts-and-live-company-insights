@@ -65,6 +65,7 @@ declare global {
         email: string;
         name: string;
         intro: string;
+        unsubscribeUrl?: string;
     };
 
     type User = {

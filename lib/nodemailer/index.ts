@@ -9,10 +9,11 @@ export const transporter = nodemailer.createTransport({
     }
 })
 
-export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData) => {
+export const sendWelcomeEmail = async ({ email, name, intro, unsubscribeUrl }: WelcomeEmailData) => {
     const htmlTemplate = WELCOME_EMAIL_TEMPLATE
         .replace('{{name}}', name)
-        .replace('{{intro}}', intro);
+        .replace('{{intro}}', intro)
+        .replaceAll('{{unsubscribeUrl}}', unsubscribeUrl || '#');
 
     const mailOptions = {
         from: `"MarkerSense" <market.sense67@gmail.com>`,
@@ -26,11 +27,12 @@ export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData)
 }
 
 export const sendNewsSummaryEmail = async (
-    { email, date, newsContent }: { email: string; date: string; newsContent: string }
+    { email, date, newsContent, unsubscribeUrl }: { email: string; date: string; newsContent: string; unsubscribeUrl?: string }
 ): Promise<void> => {
     const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE
         .replace('{{date}}', date)
-        .replace('{{newsContent}}', newsContent);
+        .replace('{{newsContent}}', newsContent)
+        .replaceAll('{{unsubscribeUrl}}', unsubscribeUrl || '#');
 
     const mailOptions = {
         from: `"MarketSense News" <market.sense67@gmail.com>`,
