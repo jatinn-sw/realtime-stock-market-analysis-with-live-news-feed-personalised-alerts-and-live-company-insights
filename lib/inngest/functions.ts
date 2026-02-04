@@ -5,6 +5,8 @@ import { getAllUsersForNewsEmail } from "@/lib/actions/user.actions";
 import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 import { getNews } from "@/lib/actions/finnhub.actions";
 import { getFormattedTodayDate } from "@/lib/utils";
+import { isUnsubscribed } from "@/lib/actions/email-preferences.actions";
+import { getUnsubscribeUrl } from "@/lib/utils/unsubscribe";
 
 type UserForNewsEmail = User;
 
@@ -35,12 +37,15 @@ export const sendSignUpEmail = inngest.createFunction(
         })
 
         await step.run('send-welcome-email', async () => {
+            const { data: { email, name } } = event;
+            const unsubscribed = await isUnsubscribed(email);
+            if (unsubscribed) return { skipped: true, reason: 'User unsubscribed' };
+
             const part = response.candidates?.[0]?.content?.parts?.[0];
             const introText = (part && 'text' in part ? part.text : null) || 'Thanks for joining MarketSense. You can now track markets and make smarter moves.'
 
-            const { data: { email, name } } = event;
-
-            return await sendWelcomeEmail({ email, name, intro: introText });
+            const unsubscribeUrl = getUnsubscribeUrl(email);
+            return await sendWelcomeEmail({ email, name, intro: introText, unsubscribeUrl });
         })
 
         return {
@@ -106,16 +111,21 @@ export const sendDailyNewsSummary = inngest.createFunction(
             }
         }
 
-        // Step #4: (placeholder) Send the emails
+        // Step #4: Send the emails (unsubscribed users already excluded in getAllUsersForNewsEmail)
         await step.run('send-news-emails', async () => {
             await Promise.all(
                 userNewsSummaries.map(async ({ user, newsContent }) => {
                     if (!newsContent) return false;
-
-                    return await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), newsContent })
+                    const unsubscribeUrl = getUnsubscribeUrl(user.email);
+                    return await sendNewsSummaryEmail({
+                        email: user.email,
+                        date: getFormattedTodayDate(),
+                        newsContent,
+                        unsubscribeUrl,
+                    });
                 })
-            )
-        })
+            );
+        });
 
         return { success: true, message: 'Daily news summary emails sent successfully' }
     }
